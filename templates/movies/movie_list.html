@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="trending__product">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 col-sm-8">
+                        <div class="section-title">
+                            <h4>ЖАҢА ДЫБЫСТАМАЛАР</h4>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="btn__all">
+                            <a href="./categories" class="primary-btn hover-red">БАРЛЫҒЫ <span
+                                    class="arrow_right"></span></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!--*************-->
+                    {% for movie in object_list %}
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="product__item">
+                                <a href="{{ movie.get_absolute_url }}">
+                                    <div class="product__item__pic set-bg"
+                                         data-setbg="{{ movie.img.url }}">
+                                        <div class="ep">{{ movie.series.count }} / {{ movie.max_series }}</div>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <!-- <ul>
+                                            <li>Active</li>
+                                            <li>Movie</li>
+                                        </ul> !-->
+                                        <h5 class="title">{{ movie.title }}</h5>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-lg-4 col-md-6 col-sm-8">
+            <div class="product__sidebar">
+                <div class="product__sidebar__view">
+                    <div class="section-title">
+                        <h4>ЖАЛҒАСУДА:</h4>
+                    </div>
+                    <a href="chainsawman_1-1">
+                        <div class="product__sidebar__view__item set-bg mix day years"
+                             data-setbg="{% static 'img/chainsawman_ongoing_poster.jpg' %}">
+                            <h5 style="color:white; background-color: rgba(0, 0, 0, 0.541); font-weight: bold;">
+                                Шынжырлы Ара Адам 1 Маусым</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
