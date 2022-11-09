@@ -4,10 +4,8 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 import sentry_sdk
-from sentry_sdk.integrations.celery import CeleryIntegration
 from sentry_sdk.integrations.django import DjangoIntegration
 from sentry_sdk.integrations.logging import LoggingIntegration
-from sentry_sdk.integrations.redis import RedisIntegration
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -137,8 +135,6 @@ else:
     integrations = [
         sentry_logging,
         DjangoIntegration(),
-        CeleryIntegration(),
-        RedisIntegration(),
     ]
     sentry_sdk.init(
         dsn=SENTRY_DSN,
