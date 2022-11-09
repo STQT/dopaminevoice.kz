@@ -44,7 +44,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -52,6 +51,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "djangoProject.urls"
@@ -74,7 +74,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "djangoProject.wsgi.application"
 
-DATABASES = {}
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 if not DEBUG:
@@ -85,8 +84,16 @@ if not DEBUG:
         }
     }
 else:
-    import dj_database_url
-    DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('DB_NAME'),
+            'USER': os.getenv('DB_USER'),
+            'PASSWORD': os.getenv('DB_PASSWORD'),
+            'PORT': 5432,
+            'HOST': 'localhost',
+        }
+    }
     LOGGING = {
         "version": 1,
         "disable_existing_loggers": True,
