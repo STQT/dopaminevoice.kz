@@ -26,6 +26,7 @@ class Movie(models.Model):
     duration = models.IntegerField(default=24, verbose_name="Уақыты")
     max_series = models.IntegerField(default=12, verbose_name="Жалпы бөлім саны")
     url = models.SlugField(max_length=130, unique=True)
+    continued = models.BooleanField(default=True, verbose_name="Жалғасуда")
 
     def get_absolute_url(self):
         return reverse("movies:movie_detail", kwargs={"slug": self.url})

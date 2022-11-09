@@ -65,21 +65,8 @@
         </div>
 
 
-        <div class="col-lg-4 col-md-6 col-sm-8">
-            <div class="product__sidebar">
-                <div class="product__sidebar__view">
-                    <div class="section-title">
-                        <h4>ЖАЛҒАСУДА:</h4>
-                    </div>
-                    <a href="{{ banner.get_absolute_url }}">
-                        <div class="product__sidebar__view__item set-bg mix day years"
-                             data-setbg="{% static 'img/chainsawman_ongoing_poster.jpg' %}">
-                            <h5 style="color:white; background-color: rgba(0, 0, 0, 0.541); font-weight: bold;">
-                                Шынжырлы Ара Адам 1 Маусым</h5>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
+        {% include "includes/sidebar.html" %}
+
+
     </div>
 {% endblock %}
