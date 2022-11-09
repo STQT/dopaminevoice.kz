@@ -45,7 +45,7 @@
                                 <a href="{{ movie.get_absolute_url }}">
                                     <div class="product__item__pic set-bg"
                                          data-setbg="{{ movie.img.url }}">
-                                        <div class="ep">{{ movie|last_number }} / {{ movie.series.count }}</div>
+                                        <div class="ep">{{ movie|last_number }} / {{ movie.max_series }}</div>
                                     </div>
                                     <div class="product__item__text">
                                         <!-- <ul>
