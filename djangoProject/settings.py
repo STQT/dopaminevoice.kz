@@ -1,7 +1,14 @@
 import datetime
+import logging
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+import sentry_sdk
+from sentry_sdk.integrations.celery import CeleryIntegration
+from sentry_sdk.integrations.django import DjangoIntegration
+from sentry_sdk.integrations.logging import LoggingIntegration
+from sentry_sdk.integrations.redis import RedisIntegration
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -19,7 +26,6 @@ else:
     DEBUG = False
 
 ALLOWED_HOSTS = [url for url in os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(',')]
-
 
 # Application definition
 
@@ -69,7 +75,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "djangoProject.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 if DEBUG:
@@ -87,6 +92,60 @@ else:
         ),
     }
 
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": True,
+        "formatters": {
+            "verbose": {
+                "format": "%(levelname)s %(asctime)s %(module)s "
+                          "%(process)d %(thread)d %(message)s"
+            }
+        },
+        "handlers": {
+            "console": {
+                "level": "DEBUG",
+                "class": "logging.StreamHandler",
+                "formatter": "verbose",
+            }
+        },
+        "root": {"level": "INFO", "handlers": ["console"]},
+        "loggers": {
+            "django.db.backends": {
+                "level": "ERROR",
+                "handlers": ["console"],
+                "propagate": False,
+            },
+            # Errors logged by the SDK itself
+            "sentry_sdk": {"level": "ERROR", "handlers": ["console"], "propagate": False},
+            "django.security.DisallowedHost": {
+                "level": "ERROR",
+                "handlers": ["console"],
+                "propagate": False,
+            },
+        },
+    }
+
+    # # Sentry
+    # # ------------------------------------------------------------------------------
+    SENTRY_DSN = os.getenv("SENTRY_DSN")
+    SENTRY_LOG_LEVEL = os.getenv("DJANGO_SENTRY_LOG_LEVEL", logging.INFO)
+
+    sentry_logging = LoggingIntegration(
+        level=SENTRY_LOG_LEVEL,  # Capture info and above as breadcrumbs
+        event_level=logging.ERROR,  # Send errors as events
+    )
+    integrations = [
+        sentry_logging,
+        DjangoIntegration(),
+        CeleryIntegration(),
+        RedisIntegration(),
+    ]
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=integrations,
+        environment=os.getenv("SENTRY_ENVIRONMENT", default="production"),
+        traces_sample_rate=os.getenv("SENTRY_TRACES_SAMPLE_RATE", default=0.0),
+    )
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -106,6 +165,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 CKEDITOR_UPLOAD_PATH = "uploads/"
+
 
 def ckeditor_file_generator(f_n):
     year = datetime.datetime.year
@@ -138,7 +198,6 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
