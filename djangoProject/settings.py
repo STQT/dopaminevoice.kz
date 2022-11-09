@@ -73,9 +73,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "djangoProject.wsgi.application"
 
+DATABASES = {}
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-if DEBUG:
+if not DEBUG:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
@@ -83,10 +84,8 @@ if DEBUG:
         }
     }
 else:
-    DATABASES["default"] = env.db("DATABASE_URL")  # noqa F405
-    DATABASES["default"]["ATOMIC_REQUESTS"] = True  # noqa F405
-    DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)  # noqa F405
-
+    import dj_database_url
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600)
     LOGGING = {
         "version": 1,
         "disable_existing_loggers": True,
