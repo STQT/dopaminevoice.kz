@@ -13,3 +13,4 @@ python-dotenv==0.21.0
 sentry-sdk==1.10.1
 sqlparse==0.4.3
 urllib3==1.26.12
+whitenoise==6.2.0
