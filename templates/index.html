@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static %}
+{% load static movie_tags %}
 
 {% block reklama %}
     <div class="video-wrapper">
@@ -13,7 +13,7 @@
                 <img class="featured-title" src="{% static 'img/chainsawman_logo_kaz.png' %}" alt="">
             </div>
             <!-- <p class="featured-description">ШЫНЖЫРЛЫ АРА АДАМ 1 МАУСЫМ! </p>-->
-            <a href="chainsawman_1-1" style="">
+            <a href="{{ banner.get_absolute_url }}" style="">
                 <button class="featured-button">ҚАРАУ</button>
             </a>
         </div>
@@ -21,106 +21,65 @@
 {% endblock %}
 {% block content %}
     <div class="row">
-                <div class="col-lg-8">
-                    <div class="trending__product">
-                        <div class="row">
-                            <div class="col-lg-8 col-md-8 col-sm-8">
-                                <div class="section-title">
-                                    <h4>ЖАҢА ДЫБЫСТАМАЛАР</h4>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4">
-                                <div class="btn__all">
-                                    <a href="./categories" class="primary-btn hover-red">БАРЛЫҒЫ <span
-                                            class="arrow_right"></span></a>
-                                </div>
-                            </div>
+        <div class="col-lg-8">
+            <div class="trending__product">
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 col-sm-8">
+                        <div class="section-title">
+                            <h4>ЖАҢА ДЫБЫСТАМАЛАР</h4>
                         </div>
-
-                        <div class="row">
-                            <!--*************-->
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <a href="chainsawman_1-1">
-                                        <div class="product__item__pic set-bg"
-                                             data-setbg="{% static 'img/chainsaw_poster.png' %}">
-                                            <div class="ep">3 / 12</div>
-                                        </div>
-                                        <div class="product__item__text">
-                                            <!-- <ul>
-                                                <li>Active</li>
-                                                <li>Movie</li>
-                                            </ul> !-->
-                                            <h5 class="title">Шынжырлы Ара Адам(Chainsaw Man) - 1 Маусым</h5>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <a href="howls_castle">
-                                        <div class="product__item__pic set-bg"
-                                             data-setbg="{% static 'img/howl_2.png' %}">
-                                        </div>
-                                        <div class="product__item__text hover-red">
-                                            <h5 class="title"> Хаулдың Жаяу Қамалы | Толықметражды фильм</h5>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <a href="kimi_no_nawa">
-                                        <div class="product__item__pic set-bg"
-                                             data-setbg="{% static 'img/kimi_poster.png' %}">
-                                        </div>
-                                        <div class="product__item__text hover-red">
-                                            <h5 class="title">Сенің Есімің (Kimi no na wa) 2016 | Толықметражды
-                                                фильм</h5>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="product__item">
-                                    <a href="aot_1-1">
-                                        <div class="product__item__pic set-bg"
-                                             data-setbg="{% static 'img/aot_poster_1.jpg' %}">
-                                            <div class="ep">10 / 25</div>
-                                        </div>
-                                        <div class="product__item__text">
-                                            <!-- <ul>
-                                                <li>Active</li>
-                                                <li>Movie</li>
-                                            </ul> !-->
-                                            <h5 class="title">Титандар Шабуылы(Shingeki no Kyojin) - 1 Маусым</h5>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="btn__all">
+                            <a href="{% url 'movies:movie_list' %}" class="primary-btn hover-red">БАРЛЫҒЫ <span
+                                    class="arrow_right"></span></a>
                         </div>
                     </div>
                 </div>
 
-
-                <div class="col-lg-4 col-md-6 col-sm-8">
-                    <div class="product__sidebar">
-                        <div class="product__sidebar__view">
-                            <div class="section-title">
-                                <h4>ЖАЛҒАСУДА:</h4>
+                <div class="row">
+                    <!--*************-->
+                    {% for movie in anime %}
+                        <div class="col-lg-4 col-md-6 col-sm-6">
+                            <div class="product__item">
+                                <a href="{{ movie.get_absolute_url }}">
+                                    <div class="product__item__pic set-bg"
+                                         data-setbg="{{ movie.img.url }}">
+                                        <div class="ep">{{ movie|last_number }} / {{ movie.series.count }}</div>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <!-- <ul>
+                                            <li>Active</li>
+                                            <li>Movie</li>
+                                        </ul> !-->
+                                        <h5 class="title">{{ movie.title }}</h5>
+                                    </div>
+                                </a>
                             </div>
-                            <a href="chainsawman_1-1">
-                                <div class="product__sidebar__view__item set-bg mix day years"
-                                     data-setbg="{% static 'img/chainsawman_ongoing_poster.jpg' %}">
-                                    <h5 style="color:white; background-color: rgba(0, 0, 0, 0.541); font-weight: bold;">
-                                        Шынжырлы Ара Адам 1 Маусым</h5>
-                                </div>
-                            </a>
                         </div>
-                    </div>
+                    {% endfor %}
+
+
                 </div>
             </div>
+        </div>
+
+
+        <div class="col-lg-4 col-md-6 col-sm-8">
+            <div class="product__sidebar">
+                <div class="product__sidebar__view">
+                    <div class="section-title">
+                        <h4>ЖАЛҒАСУДА:</h4>
+                    </div>
+                    <a href="{{ banner.get_absolute_url }}">
+                        <div class="product__sidebar__view__item set-bg mix day years"
+                             data-setbg="{% static 'img/chainsawman_ongoing_poster.jpg' %}">
+                            <h5 style="color:white; background-color: rgba(0, 0, 0, 0.541); font-weight: bold;">
+                                Шынжырлы Ара Адам 1 Маусым</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

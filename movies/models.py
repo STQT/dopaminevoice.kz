@@ -15,7 +15,7 @@ class Movie(models.Model):
         (0, "Онгоинг"),
         (1, "Аяқталған")
     )
-    img = models.ImageField(verbose_name="Сурет")
+    img = models.ImageField(verbose_name="Сурет", upload_to="anime/%y/%m/%d")
     title = models.CharField(max_length=255, verbose_name="Атау")
     original_title = models.CharField(max_length=255, verbose_name="Түпнұсқа атау")
     description = models.TextField(max_length=255, verbose_name="Сипаттама")
@@ -29,9 +29,6 @@ class Movie(models.Model):
 
     def get_absolute_url(self):
         return reverse("movies:movie_detail", kwargs={"slug": self.url})
-
-    def get_series_url(self):
-        return reverse("movies:movie_series_detail", kwargs={"slug": self.series.number})
 
     class Meta:
         verbose_name = _("Аниме")
@@ -47,8 +44,11 @@ class MovieSeries(models.Model):
     iframe_link = models.CharField(verbose_name="OK.ru LINK",
                                    max_length=255)
 
-    def get_absolute_url(self):
-        return reverse("movies:movie_seriya_detail", kwargs={"slug": self.number})
+    def get_episode_url(self):
+        return reverse('movies:movie_seriya_detail', kwargs={"slug": self.movie.url, "seriya": self.number})
+
+    def __str__(self):
+        return str(self.number)
 
     class Meta:
         verbose_name = _("Аниме сериясы")

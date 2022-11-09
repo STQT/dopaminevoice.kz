@@ -1,3 +1,4 @@
+import datetime
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,6 +27,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "movies",
+    "news",
+    "debug_toolbar",
+    'ckeditor',
+    'ckeditor_uploader',
+    "active_link",
 ]
 
 MIDDLEWARE = [
@@ -36,6 +42,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "djangoProject.urls"
@@ -43,8 +50,7 @@ ROOT_URLCONF = "djangoProject.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / 'templates']
-        ,
+        "DIRS": [BASE_DIR / 'templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -88,12 +94,33 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+def ckeditor_file_generator(f_n):
+    year = datetime.datetime.year
+    month = datetime.datetime.month
+    day = datetime.datetime.day
+    hour = datetime.datetime.hour
+    minute = datetime.datetime.minute
+    result = f"{year}/{month}/{day}/{hour}-{minute}--{f_n}"
+    return result
 
 
+CKEDITOR_FILENAME_GENERATOR = 'ckeditor_file_generator'
+
+CKEDITOR_CONFIGS = {
+    'default':
+        {
+            'toolbar': 'full',
+        },
+}
+
+CKEDITOR_RESTRICT_BY_USER = True
+CKEDITOR_ALLOW_NONIMAGE_FILES = False
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "kk"
 
 TIME_ZONE = "UTC"
 
