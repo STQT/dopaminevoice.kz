@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -199,6 +200,7 @@ if DEBUG:
     STATICFILES_DIRS = [BASE_DIR / "static"]
     MEDIA_ROOT = BASE_DIR / "media"
 else:
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
     STATIC_ROOT = os.getenv("STATIC_ROOT")
     MEDIA_ROOT = os.getenv("MEDIA_ROOT")
 
