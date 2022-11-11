@@ -1,5 +1,77 @@
 {% extends "base.html" %}
 {% load movie_tags %}
+{% block extra_head %}
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin-top: 20px;
+        }
+
+        /*==================================================
+          Post Contents CSS
+          ==================================================*/
+
+        .post-content img.post-image, video.post-video, .google-maps {
+            width: 100%;
+            height: auto;
+        }
+
+        .post-content .google-maps .map {
+            height: 300px;
+        }
+
+
+        .post-content .post-container .post-detail .reaction {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        .post-content .post-container .post-detail .post-comment {
+            display: inline-flex;
+            margin: 10px auto;
+            width: 100%;
+        }
+
+        .post-content .post-container .post-detail .post-comment img.profile-photo-sm {
+            margin-right: 10px;
+        }
+
+        .post-content .post-container .post-detail .post-comment .form-control {
+            height: 30px;
+            border: 1px solid #ccc;
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            margin: 7px 0;
+            min-width: 0;
+        }
+
+        img.profile-photo-md {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+        }
+
+        img.profile-photo-sm {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+        }
+
+        .text-green {
+            color: #8dc63f;
+        }
+
+        .text-red {
+            color: #ef4136;
+        }
+
+        .following {
+            color: #8dc63f;
+            font-size: 12px;
+            margin-left: 20px;
+        }
+    </style>
+{% endblock %}
 {% block content %}
     <div class="anime__details__content">
         <div class="row">
@@ -65,7 +137,7 @@
                         <div class="anime__video__player">
                             <div id="player"></div>
                             <iframe width="100%" height="384"
-                                    src="{{ episode|in_number:view.kwargs.seriya }}" frameborder="0"
+                                    src="{{ current_episode.iframe_link }}" frameborder="0"
                                     allow="autoplay" allowfullscreen></iframe>
                         </div>
                     {% endif %}
@@ -73,10 +145,81 @@
             </div>
         </div>
     </div>
-    <h3 style="color: white; margin-bottom: 20px;">Пікірлер:</h3>
+{#    TODO: REMOVE DUBLICATE QUERY CHANGE#}
+    <h3 style="color: white; margin-bottom: 20px;">Пікірлер ({{ current_episode.comments.count }}):</h3>
     <div id="vk_comments"></div>
-    <script type="text/javascript">
-        VK.Widgets.Comments("vk_comments", {limit: 15, attach: false});
-        s
-    </script>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="line-divider"></div>
+
+                    <div class="pagination">
+                    <span class="step-links">
+                    {% for comment in comments %}
+                        <div class="post-comment">
+{#                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt=""#}
+{#                                 class="profile-photo-sm">#}
+{#                            <p>#}
+                                <a href="#" class="profile-link">
+                                <strong> {{ comment.author.get_short_name }} <br/></strong>
+                                </a>
+                                <i class="em em-laughing"></i> {{ comment.comment }} </p>
+                            <div class="reaction">
+                                <p>
+                                    <a class="btn">
+                                        <i class="fa fa-thumbs{% if not liked %}-o{% endif %}-up"></i> {{ comment.user_likes.count }}
+                                    </a>
+                                    <a class="btn">
+                                        <i class="fa fa-thumbs{% if not liked %}-o{% endif %}-down"></i> {{ comment.user_dislikes.count }}
+                                    </a>
+                                    <i class="fa fa-calendar"> </i> {{ comment.created_at }}
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                        {% if comments.has_previous %}
+                            <a href="?page=1">&laquo; first</a>
+                            <a href="?page={{ comments.previous_page_number }}">previous</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ comments.number }} of {{ comments.paginator.num_pages }}.
+                        </span>
+                        {% if comments.has_next %}
+                            <a href="?page={{ comments.next_page_number }}">next</a>
+                            <a href="?page={{ comments.paginator.num_pages }}">last &raquo;</a>
+                        {% endif %}
+                    </span>
+                    </div>
+                    {% if user.is_authenticated %}
+                        <div class="post-comment">
+                            {#                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""#}
+                            {#                             class="profile-photo-sm">#}
+
+                            {#                            <form class="row" action="{% url 'movies:add_comment' 1 %}">#}
+                            {#                                {% csrf_token %}#}
+                            {#                                <input type="text" class="form-control" placeholder="Пікір жазу"/>#}
+                            {#                                <button type="submit" class="btn btn-success">Жіберу</button>#}
+                            {#                            </form>#}
+                            <form class="row" action="{% url 'movies:movie_seriya_detail' current_episode.movie.url current_episode.number %}" method="post">
+                                {% csrf_token %}
+                                {#    {{ form }}#}
+                                <label for="id_comment">Comment:</label>
+                                <textarea name="comment" cols="40" rows="3" required id="id_comment"></textarea>
+                                {#    <textarea id="id_comment" name="id_comment" class="form-control" placeholder="Пікір жазу"></textarea>#}
+                                <button type="submit" class="btn btn-success">Жіберу</button>
+                            </form>
+                        </div>
+                    {% else %}
+                        <p>Пікір қалдыру ушін сайтқа кіріңіз
+                            <a href="{% url "account_login" %}" class="btn btn-info">
+                                Кіру
+                            </a>
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Movie, MovieSeries, Genre
+from .models import Movie, MovieSeries, Genre, MovieComments
 
 
 class MovieSeriesInline(admin.TabularInline):
@@ -19,4 +19,9 @@ class MovieSeriesAdmin(admin.ModelAdmin):
 
 @admin.register(Genre)
 class GenreAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(MovieComments)
+class MovieCommentsAdmin(admin.ModelAdmin):
     pass

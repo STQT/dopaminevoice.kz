@@ -1,6 +1,9 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class Genre(models.Model):
@@ -50,8 +53,24 @@ class MovieSeries(models.Model):
         return reverse('movies:movie_seriya_detail', kwargs={"slug": self.movie.url, "seriya": self.number})
 
     def __str__(self):
-        return str(self.number)
+        return "{} | Қисм: {} | {}".format(self.id, self.number, self.movie.title)
 
     class Meta:
         verbose_name = _("Аниме сериясы")
         verbose_name_plural = _("Аниме сериялары")
+
+
+class MovieComments(models.Model):
+    episode = models.ForeignKey(MovieSeries, on_delete=models.CASCADE, related_name="comments")
+    comment = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    user_likes = models.ManyToManyField(User, related_name="user_likes", blank=True)
+    user_dislikes = models.ManyToManyField(User, related_name="user_dislikes", blank=True)
+
+    class Meta:
+        verbose_name = _("Пікір")
+        verbose_name_plural = _("Пікірлер")
+
+    def __str__(self):
+        return "{} | {} | {} ".format(self.episode.movie.title, self.episode.number, self.author.get_short_name())
