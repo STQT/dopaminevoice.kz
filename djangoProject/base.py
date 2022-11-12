@@ -138,7 +138,7 @@ CKEDITOR_ALLOW_NONIMAGE_FILES = False
 
 LANGUAGE_CODE = "kk"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Tashkent"
 
 USE_I18N = True
 
@@ -187,3 +187,4 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
+DATETIME_FORMAT = 'j-N Y, H:i'
