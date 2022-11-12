@@ -1,5 +1,4 @@
 {% load static %}
-{% load active_link_tags %}
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -34,69 +33,14 @@
 </head>
 
 <body>
-
-
-<!-- Header Section Begin -->
-<header class="header">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-2">
-                <div class="header__logo">
-                    <a href="/">
-                        <img class="top-logo" src="{% static 'img/logo_darkmode.png' %}" alt="">
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-8">
-                <div class="header__nav">
-                    <nav class="header__menu mobile-menu">
-                        <ul>
-                            <li class="hui {% active_link 'main' 'active' %}">
-                                <a href="{% url 'movies:main' %}">БАСТЫ</a></li>
-                            <li class="hui {% active_link 'movies:movie_list' 'active' %}"><a href="#">КАТЕГОРИЯЛАР</a>
-                                <ul class="dropdown">
-                                    <!-- <li class="hui"><a href="./index.html">Толықметражды</a></li>
-                                    <li class="hui"><a href="./index.html">ТВ сериалар</a></li>
-                                    <li class="hui"><a href="./index.html">2021</a></li> !-->
-                                    <li class="hui">
-                                        <a href="{% url 'movies:movie_list' %}">БАРЛЫҒЫ</a></li>
-                                </ul>
-                            </li>
-                            <li class="hui {% active_link 'manga' %}"><a href="{% url 'manga' %}">МАНГАЛАР</a></li>
-                            <li class="hui {% active_link 'news:news_list||news:news_detail' %}">
-                                <a href="{% url 'news:news_list' %}">ЖАҢАЛЫҚТАР</a></li>
-                            <li class="hui {% active_link 'about' 'active' %}">
-                                <a href="{% url 'about' %}">БІЗ ЖАЙЛЫ</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-            <div class="col-lg-2">
-                <div class="header__right">
-                    {% if user.is_authenticated %}
-                        <a href="{% url 'account_logout' %}"
-                           style="background: #e53637; padding: 10px; border-radius: 15px; font-weight: 700;">ШЫҒУ⠀<span
-                                class="fa fa-sign-in" style="font-size:20px; "></span></a>
-                    {% else %}
-                        <a href="{% url 'account_login' %}"
-                           style="background: #e53637; padding: 10px; border-radius: 15px; font-weight: 700;">КІРУ⠀<span
-                                class="fa fa-sign-in" style="font-size:20px; "></span></a>
-                    {% endif %}
-
-                </div>
-            </div>
-        </div>
-        <div id="mobile-menu-wrap"></div>
-    </div>
-</header>
-<!-- Header End -->
+{% include "includes/header.html" %}
 
 <section class="product spad">
     <div class="container">
         <div class="row">
             {% if messages %}
                 <div class="col-md-12">
-{#                    <p style="text-align: center">Хабарлар:</p>#}
+                    {#                    <p style="text-align: center">Хабарлар:</p>#}
                     <ul class="messages">
                         {% for message in messages %}
                             <div class="alert {% if message.tags %} {{ message.tags }}"{% endif %}>{{ message }}
@@ -124,50 +68,7 @@
 <!-- Product Section Begin -->
 
 <!-- Product Section End -->
-
-<!-- Footer Section Begin -->
-<footer class="footer">
-    <div class="page-up">
-        <a href="#" id="scrollToTopButton"><span class="arrow_carrot-up"></span></a>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="footer__logo">
-                    <a href="/"><img class="footer-logo" src="{% static 'img/logo_darkmode.png' %}" alt=""></a>
-                    <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Dopamine Voice &copy;<script>document.write(new Date().getFullYear());</script>
-                        Барлық құқықтар сақталған.
-                        Дизайн: <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <!--  <div class="footer__nav">
-                     <ul>
-                         <li class="active"><a href="./index.html">Homepage</a></li>
-                         <li><a href="./categories.html">Categories</a></li>
-                         <li><a href="./blog.html">Our Blog</a></li>
-                         <li><a href="#">Contacts</a></li>
-                     </ul>
-                 </div> -->
-            </div>
-            <div class="col-lg-3">
-                <p>Сайттағы барлық материалдар тегін үйде шолу үшін ұсынылған.
-                    Авторлық құқық бұзылған жағдайда-поштаға хабарласыңыз: dopaminevoice@inbox.ru</p>
-                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- Js Plugins -->
-<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
-<script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
-<script src="{% static 'js/mixitup.min.js' %}"></script>
-<script src="{% static 'js/jquery.slicknav.js' %}"></script>
-<script src="{% static 'js/owl.carousel.min.js' %}"></script>
-<script src="{% static 'js/main.js' %}"></script>
-
+{% include "includes/footer.html" %}
 
 </body>
+</html>

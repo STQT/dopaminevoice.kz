@@ -1,0 +1,75 @@
+<h3 style="color: white; margin-bottom: 20px;">Пікірлер ({{ comments_count }}):</h3>
+<div id="vk_comments"></div>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="line-divider"></div>
+
+                <div class="pagination">
+                    <span class="step-links">
+                    {% for comment in comments %}
+                        <div class="post-comment">
+{#                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt=""#}
+{#                                 class="profile-photo-sm">#}
+{#                            <p>#}
+                                <a href="#" class="profile-link">
+                                <strong> {{ comment.author.get_short_name }}<br/></strong>
+                                </a>
+                                <i class="em em-laughing"></i> <p>{{ comment.comment }}</p>
+                            <div class="reaction">
+                                <p>
+                                    <a href="{% url 'movies:like_comment' comment.id %}" style="color: white;">
+                                        <i class="fa fa-thumbs{% if not comment.is_liked %}-o{% endif %}-up"></i> {{ comment.user_likes.count }}
+                                    </a>
+                                    <a href="{% url 'movies:dislike_comment' comment.id %}" style="color: white;">
+                                        <i class="fa fa-thumbs{% if not comment.is_disliked %}-o{% endif %}-down"></i> {{ comment.user_dislikes.count }}
+                                    </a>
+                                    <i class="fa fa-calendar"> </i> {{ comment.created_at }}
+                                </p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                        {% if comments.has_previous %}
+                            <a href="?page=1">&laquo; бірінші</a>
+                            <a href="?page={{ comments.previous_page_number }}">алдынғы</a>
+                        {% endif %}
+                        <p class="current">
+                            Page {{ comments.number }} of {{ comments.paginator.num_pages }}.
+                        </p>
+                        {% if comments.has_next %}
+                            <a href="?page={{ comments.next_page_number }}">келесі</a>
+                            <a href="?page={{ comments.paginator.num_pages }}">соңы &raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+                <hr>
+                <hr>
+                <hr>
+                {% if user.is_authenticated %}
+                    <div class="post-comment">
+                        <form class="row"
+                              action="{% url 'movies:movie_seriya_detail' current_episode.movie.url current_episode.number %}"
+                              method="post">
+                            {#                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt=""#}
+                            {#                                                     class="profile-photo-sm">#}
+                            {% csrf_token %}
+                            {#    {{ form }}#}
+                            <label for="id_comment">Пікіріңіз:</label>
+                            <input name="comment" required id="id_comment"
+                                   class="form-control" placeholder="Пікір жазу"/>
+                            {#    <textarea id="id_comment" name="id_comment" cols="40" rows="3" class="form-control" placeholder="Пікір жазу"></textarea>#}
+                            <button type="submit" class="btn btn-success">Жіберу</button>
+                        </form>
+                    </div>
+                {% else %}
+                    <p>Пікір қалдыру ушін сайтқа кіріңіз
+                        <a href="{% url "account_login" %}" class="btn btn-info">
+                            Кіру
+                        </a>
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>

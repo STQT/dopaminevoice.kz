@@ -6,8 +6,6 @@
         <video autoplay loop muted plays-inline class="back-video">
             <source src="{% static 'video/chainsawman.mp4' %}" type="video/mp4">
         </video>
-
-
         <div class="banner_description">
             <div>
                 <img class="featured-title" src="{% static 'img/chainsawman_logo_kaz.png' %}" alt="">
@@ -45,7 +43,9 @@
                                 <a href="{{ movie.get_absolute_url }}">
                                     <div class="product__item__pic set-bg"
                                          data-setbg="{{ movie.img.url }}">
+                                        {% if not movie.full_length %}
                                         <div class="ep">{{ movie.series.last.number }} / {{ movie.max_series }}</div>
+                                        {% endif %}
                                     </div>
                                     <div class="product__item__text">
                                         <!-- <ul>
