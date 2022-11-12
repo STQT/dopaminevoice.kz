@@ -31,6 +31,9 @@ class Movie(models.Model):
     url = models.SlugField(max_length=130, unique=True)
     continued = models.BooleanField(default=True, verbose_name="Жалғасуда")
     full_length = models.BooleanField(default=False, verbose_name="Фильм")
+    landscape_photo = models.ImageField(upload_to="anime/%y/%m/%d",
+                                        verbose_name="Пейзаждық фото",
+                                        default="landscape_photo.jpg")
 
     def get_absolute_url(self):
         return reverse("movies:movie_detail", kwargs={"slug": self.url})

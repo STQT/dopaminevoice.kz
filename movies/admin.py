@@ -10,6 +10,7 @@ class MovieSeriesInline(admin.TabularInline):
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
     inlines = [MovieSeriesInline]
+    raw_id_fields = ["genre"]
 
 
 @admin.register(MovieSeries)

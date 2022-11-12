@@ -73,10 +73,17 @@ class MovieDetailView(DetailView):
         if isinstance(request.user.id, int) is False:
             return HttpResponseRedirect(reverse("movies:main"))
         user = User.objects.filter(pk=request.user.id).first()
-        episode = get_object_or_404(MovieSeries, pk=kwargs.get("seriya"))
+        episode = MovieSeries.objects.filter(
+            movie__url=kwargs.get("slug"),
+            number=kwargs.get("seriya")
+        ).first()
         form = MovieCommentsForm(request.POST)
         if form.is_valid():
-            MovieComments.objects.create(comment=form.data.get('comment'), episode=episode, author=user)
+            MovieComments.objects.create(
+                comment=form.data.get('comment'),
+                episode=episode,
+                author=user
+            )
             return HttpResponseRedirect(reverse("movies:movie_detail", kwargs={"slug": episode.movie.url}))
         return HttpResponseRedirect(reverse("movies:movie_detail", kwargs={"slug": episode.movie.url}))
 

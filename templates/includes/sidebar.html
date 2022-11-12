@@ -1,18 +1,18 @@
 <div class="col-lg-4 col-md-6 col-sm-8">
-            <div class="product__sidebar">
-                <div class="product__sidebar__view">
-                    <div class="section-title">
-                        <h4>ЖАЛҒАСУДА:</h4>
-                    </div>
-                    {% for movie in sidebar %}
-                        <a href="{{ movie.get_absolute_url }}">
-                            <div class="product__sidebar__view__item set-bg mix day years"
-                                 data-setbg="{{ movie.img.url }}">
-                                <h5 style="color:white; background-color: rgba(0, 0, 0, 0.541); font-weight: bold;">
-                                    {{ movie.title }}</h5>
-                            </div>
-                        </a>
-                    {% endfor %}
-                </div>
+    <div class="product__sidebar">
+        <div class="product__sidebar__view">
+            <div class="section-title">
+                <h4>ЖАЛҒАСУДА:</h4>
             </div>
+            {% for movie in sidebar %}
+                <a href="{{ movie.get_absolute_url }}">
+                    <div class="product__sidebar__view__item set-bg mix day years"
+                         data-setbg="{{ movie.landscape_photo.url }}">
+                        <h5 style="color:white; background-color: rgba(0, 0, 0, 0.541); font-weight: bold;">
+                            {{ movie.title }}</h5>
+                    </div>
+                </a>
+            {% endfor %}
         </div>
+    </div>
+</div>
