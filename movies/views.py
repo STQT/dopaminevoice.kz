@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.db.models import Exists, When, Case, BooleanField, Count
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
@@ -7,11 +8,12 @@ from django.core.paginator import Paginator
 
 from .models import Movie, MovieComments, MovieSeries
 from .forms import MovieCommentsForm
+
 User = get_user_model()
 
 
 def main_page(request):
-    qs = Movie.objects.all()
+    qs = Movie.objects.prefetch_related("series").distinct()
     banner = Movie.objects.filter(url="chainsawman").first()
     ctx = {"anime": qs, "banner": banner}
     return render(request, 'index.html', ctx)
@@ -28,6 +30,7 @@ class MovieDetailView(DetailView):
     def get_context_data(self, *args, **kwargs):
         ctx = super().get_context_data()
         series = self.object.series.select_related("movie")
+        print(series)
         if self.kwargs.get('seriya') is None:
             first_episode = series.order_by('number').first()
             if first_episode:
@@ -40,11 +43,29 @@ class MovieDetailView(DetailView):
             ctx["episode"] = series
             ctx["many"] = True
         _list = MovieComments.objects.filter(
-            episode=self.kwargs['seriya']
-        ).order_by("-created_at").select_related("author").prefetch_related("user_likes", "user_dislikes")
+            episode=ctx["current_episode"]
+        ).order_by(
+            "-created_at"
+        ).select_related(
+            "author"
+        ).prefetch_related(
+            "user_likes", "user_dislikes"
+        )
+        # if isinstance(self.request.user.id, int):
+        #     _list.annotate(
+        #         favorited=Count(Case(
+        #             When(
+        #                 user_likes=self.request.user,
+        #                 then=1
+        #             ),
+        #             default=0,
+        #             output_field=BooleanField(),
+        #         )),
+        #     )
         paginator = Paginator(_list, 2)
         page = self.request.GET.get('page')
         ctx['comments'] = paginator.get_page(page)
+        ctx['comments_count'] = paginator.count
         ctx['form'] = MovieCommentsForm()
         return ctx
 
@@ -88,7 +109,6 @@ def dislike(request, comment_id, *args, **kwargs):
     else:
         return HttpResponseRedirect(reverse("movies:main"))
     return HttpResponseRedirect(reverse("movies:movie_detail", args={"slug": comment.episode.movie.url}))
-
 
 # def add_comment(request, episode_id, *args, **kwargs):
 #     episode = get_object_or_404(MovieSeries, pk=episode_id)  # noqa

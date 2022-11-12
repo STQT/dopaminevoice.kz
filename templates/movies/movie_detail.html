@@ -146,7 +146,7 @@
         </div>
     </div>
 {#    TODO: REMOVE DUBLICATE QUERY CHANGE#}
-    <h3 style="color: white; margin-bottom: 20px;">Пікірлер ({{ current_episode.comments.count }}):</h3>
+    <h3 style="color: white; margin-bottom: 20px;">Пікірлер ({{ comments_count }}):</h3>
     <div id="vk_comments"></div>
     <section>
         <div class="container">
@@ -162,7 +162,7 @@
 {#                                 class="profile-photo-sm">#}
 {#                            <p>#}
                                 <a href="#" class="profile-link">
-                                <strong> {{ comment.author.get_short_name }} <br/></strong>
+                                <strong> {{ comment.author.get_short_name }}<br/></strong>
                                 </a>
                                 <i class="em em-laughing"></i> {{ comment.comment }} </p>
                             <div class="reaction">
