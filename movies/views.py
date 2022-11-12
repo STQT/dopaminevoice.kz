@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db.models import Exists, When, Case, BooleanField, Count, OuterRef
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, DetailView
@@ -35,6 +35,8 @@ class MovieDetailView(DetailView):
             if first_episode:
                 self.kwargs['seriya'] = first_episode.number
         ctx["current_episode"] = series.filter(number=self.kwargs['seriya']).first()
+        if not ctx["current_episode"]:
+            raise Http404
         _list = MovieComments.objects.filter(
             episode=ctx["current_episode"]
         ).order_by(

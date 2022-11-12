@@ -29,14 +29,20 @@
                                 </p>
                             </div>
                         </div>
+                    {% empty %}
+                        <div class="post-comment">
+                        <p>Бірде бір пікір жоқ. Бірінші пікір иесі боліңіз</p>
+                        </div>
                     {% endfor %}
                         {% if comments.has_previous %}
                             <a href="?page=1">&laquo; бірінші</a>
                             <a href="?page={{ comments.previous_page_number }}">алдынғы</a>
                         {% endif %}
-                        <p class="current">
-                            Page {{ comments.number }} of {{ comments.paginator.num_pages }}.
-                        </p>
+                        {% if comments %}
+                            <p class="current">
+                            Бет: {{ comments.number }}/{{ comments.paginator.num_pages }}.
+                            </p>
+                        {% endif %}
                         {% if comments.has_next %}
                             <a href="?page={{ comments.next_page_number }}">келесі</a>
                             <a href="?page={{ comments.paginator.num_pages }}">соңы &raquo;</a>
