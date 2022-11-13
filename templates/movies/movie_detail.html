@@ -1,7 +1,9 @@
 {% extends "base.html" %}
-{% load movie_tags %}
+{% load static %}
 {% block extra_head %}
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
     <style>
         body {
             margin-top: 20px;

@@ -1,3 +1,4 @@
+{% load static %}
 <h3 style="color: white; margin-bottom: 20px;">Пікірлер ({{ comments_count }}):</h3>
 <div id="vk_comments"></div>
 <section>
@@ -69,11 +70,33 @@
                         </form>
                     </div>
                 {% else %}
-                    <p>Пікір қалдыру ушін сайтқа кіріңіз
-                        <a href="{% url "account_login" %}" class="btn btn-info">
-                            Кіру
-                        </a>
-                    </p>
+                    {#                    =============================================================================#}
+                    <div class="limiter">
+                        <div class="container-login100">
+                            <div class="wrap-login100 p-l-110 p-r-110 p-t-15 p-b-33">
+                                <div class="login100-form validate-form flex-sb flex-w">
+					<span class="login100-form-title p-b-42">
+						Пікір қалдыру ушін сайтқа кіріңіз  Арқылы Кіріңіз
+					</span>
+
+                                    <a href="/accounts/facebook/login/?process=+login+&next={{ movie.get_absolute_url }}" class="btn-face m-b-14">
+                                        <i class="fa fa-facebook-official"></i>
+                                        Facebook
+                                    </a>
+                                    <a href="/accounts/google/login/?process=+login+&next={{ movie.get_absolute_url }}" class="btn-face m-b-14" style="background-color: #ea5849;">
+                                        <i class="fa fa-google"></i>
+                                        Google
+                                    </a>
+                                    <a href="/accounts/vk/login/?process=+login+&next={{ movie.get_absolute_url }}" class="btn-google m-b-14">
+                                        <img src="{% static 'img/icons/icon-vk.png' %}" alt="VKONTAKTE">
+                                        Vkontakte
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 {% endif %}
             </div>
         </div>

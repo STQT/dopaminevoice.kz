@@ -37,11 +37,11 @@
             <div class="col-lg-2">
                 <div class="header__right">
                     {% if user.is_authenticated %}
-                        <a href="{% url 'account_logout' %}"
+                        <a href="{% url 'account_logout' %}?next={{ request.path }}"
                            style="background: #e53637; padding: 10px; border-radius: 15px; font-weight: 700;">ШЫҒУ⠀<span
                                 class="fa fa-sign-in" style="font-size:20px; "></span></a>
                     {% else %}
-                        <a href="{% url 'account_login' %}"
+                        <a href="{% url 'account_login' %}?next={{ request.path }}"
                            style="background: #e53637; padding: 10px; border-radius: 15px; font-weight: 700;">КІРУ⠀<span
                                 class="fa fa-sign-in" style="font-size:20px; "></span></a>
                     {% endif %}
