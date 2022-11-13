@@ -93,7 +93,7 @@ def like(request, comment_id, *args, **kwargs):
         comment.user_likes.add(user)
     return HttpResponseRedirect(reverse("movies:movie_seriya_detail", kwargs={
         "slug": comment.episode.movie.url,
-        "seriya": comment.episode.id,
+        "seriya": comment.episode.number,
     }))
 
 
@@ -109,7 +109,7 @@ def dislike(request, comment_id, *args, **kwargs):
         comment.user_dislikes.add(user)
     return HttpResponseRedirect(reverse("movies:movie_seriya_detail", kwargs={
         "slug": comment.episode.movie.url,
-        "seriya": comment.episode.id,
+        "seriya": comment.episode.number,
     }))
 
 # def add_comment(request, episode_id, *args, **kwargs):
