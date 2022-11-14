@@ -2,6 +2,8 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
+from bs4 import BeautifulSoup
 
 User = get_user_model()
 
@@ -55,12 +57,26 @@ class MovieSeries(models.Model):
     def get_episode_url(self):
         return reverse('movies:movie_seriya_detail', kwargs={"slug": self.movie.url, "seriya": self.number})
 
-    def __str__(self):
-        return "{} | Қисм: {} | {}".format(self.id, self.number, self.movie.title)
-
     class Meta:
         verbose_name = _("Аниме сериясы")
         verbose_name_plural = _("Аниме сериялары")
+
+    def __str__(self):
+        return "{} | Қисм: {} | {}".format(self.id, self.number, self.movie.title)
+
+    def clean(self):
+        soup = BeautifulSoup(self.iframe_link, 'html')
+        if soup.find('iframe'):
+            try:
+                self.iframe_link = soup.find('iframe')['src']
+            except KeyError:
+                raise ValidationError(_("iframe ссылкасынде src деген тэг жоқ"))
+
+        elif soup.text.find('//') != -1:
+            pass
+        else:
+            raise ValidationError(_("iframe_link қате жаздіңіз"))
+        super().clean()
 
 
 class MovieComments(models.Model):

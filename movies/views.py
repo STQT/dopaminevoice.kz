@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.db.models import Exists, When, Case, BooleanField, Count, OuterRef
+from django.db.models import Exists, OuterRef
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
@@ -111,18 +111,3 @@ def dislike(request, comment_id, *args, **kwargs):
         "slug": comment.episode.movie.url,
         "seriya": comment.episode.number,
     }))
-
-# def add_comment(request, episode_id, *args, **kwargs):
-#     episode = get_object_or_404(MovieSeries, pk=episode_id)  # noqa
-#     if request.method == "POST":
-#         if isinstance(request.user.id, int) is False:
-#             return HttpResponseRedirect(reverse("movies:main"))
-#         user = User.objects.filter(pk=request.user.id).first()
-#         form = MovieCommentsForm(request.POST)
-#         if form.is_valid():
-#             MovieComments.objects.create(comment=form.data.get('comment'), episode=episode, author=user)
-#             return HttpResponseRedirect(reverse("movies:movie_detail", kwargs={"slug": episode.movie.url}))
-#         return HttpResponseRedirect(reverse("movies:movie_detail", kwargs={"slug": episode.movie.url}))
-#     else:
-#         form = MovieCommentsForm()
-#         return render(request, 'test.html', {'form': form})
