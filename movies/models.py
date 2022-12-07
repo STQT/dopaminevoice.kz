@@ -1,3 +1,4 @@
+from admin_async_upload.models import AsyncFileField
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
@@ -23,7 +24,7 @@ class Movie(models.Model):
     img = models.ImageField(verbose_name="Сурет", upload_to="anime/%y/%m/%d")
     title = models.CharField(max_length=255, verbose_name="Атау")
     original_title = models.CharField(max_length=255, verbose_name="Түпнұсқа атау")
-    description = models.TextField(max_length=255, verbose_name="Сипаттама")
+    description = models.TextField(verbose_name="Сипаттама")
     studia = models.CharField(max_length=50, verbose_name="Студия")
     status = models.IntegerField(choices=status_choices, default=0)
     genre = models.ManyToManyField(Genre, blank=True, verbose_name="Жанр")
@@ -36,6 +37,7 @@ class Movie(models.Model):
     landscape_photo = models.ImageField(upload_to="anime/%y/%m/%d",
                                         verbose_name="Пейзаждық фото",
                                         default="landscape_photo.jpg")
+    banner = models.BooleanField(default=False)
 
     def get_absolute_url(self):
         return reverse("movies:movie_detail", kwargs={"slug": self.url})
@@ -52,7 +54,8 @@ class MovieSeries(models.Model):
     movie = models.ForeignKey(Movie, related_name="series", on_delete=models.CASCADE)
     number = models.IntegerField(default=1, verbose_name="Бөлім")
     iframe_link = models.CharField(verbose_name="OK.ru LINK",
-                                   max_length=255)
+                                   max_length=255, blank=True, null=True)
+    video_file = AsyncFileField(null=True, blank=True)
 
     def get_episode_url(self):
         return reverse('movies:movie_seriya_detail', kwargs={"slug": self.movie.url, "seriya": self.number})
@@ -65,17 +68,18 @@ class MovieSeries(models.Model):
         return "{} | Қисм: {} | {}".format(self.id, self.number, self.movie.title)
 
     def clean(self):
-        soup = BeautifulSoup(self.iframe_link, 'html')
-        if soup.find('iframe'):
-            try:
-                self.iframe_link = soup.find('iframe')['src']
-            except KeyError:
-                raise ValidationError(_("iframe ссылкасынде src деген тэг жоқ"))
+        if self.iframe_link:
+            soup = BeautifulSoup(self.iframe_link, 'html.parser')
+            if soup.find('iframe'):
+                try:
+                    self.iframe_link = soup.find('iframe')['src']
+                except KeyError:
+                    raise ValidationError(_("iframe ссылкасынде src деген тэг жоқ"))
 
-        elif soup.text.find('//') != -1:
-            pass
-        else:
-            raise ValidationError(_("iframe_link қате жаздіңіз"))
+            elif soup.text.find('//') != -1:
+                pass
+            else:
+                raise ValidationError(_("iframe_link қате жаздіңіз"))
         super().clean()
 
 

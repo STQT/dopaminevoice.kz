@@ -33,38 +33,45 @@
 </head>
 
 <body>
+<div id="preloder">
+    <div class="loader"></div>
+</div>
 {% include "includes/header.html" %}
 
-<section class="product spad">
-    <div class="container">
-        <div class="row">
-            {% if messages %}
-                <div class="col-md-12">
-                    {#                    <p style="text-align: center">Хабарлар:</p>#}
-                    <ul class="messages">
-                        {% for message in messages %}
-                            <div class="alert {% if message.tags %} {{ message.tags }}"{% endif %}>{{ message }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
+{% block content_header %}
+    {% block breadcrumb %}
+    {% endblock %}
+    <section class="product spad">
+        <div class="container">
+            <div class="row">
+                {% if messages %}
+                    <div class="col-md-12">
+                        {#                    <p style="text-align: center">Хабарлар:</p>#}
+                        <ul class="messages">
+                            {% for message in messages %}
+                                <div class="alert {% if message.tags %} {{ message.tags }}"{% endif %}>{{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
 
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- <div class="featured-content" style="background: linear-gradient(to bottom, rgba(0,0,0,0), #0b0c2a), url('video/chainsawman.mp4')">   -->
+            {% block reklama %}
+            {% endblock %}
+
+            {% block content %}
+
+            {% endblock %}
+
         </div>
-
-        <!-- <div class="featured-content" style="background: linear-gradient(to bottom, rgba(0,0,0,0), #0b0c2a), url('video/chainsawman.mp4')">   -->
-        {% block reklama %}
-        {% endblock %}
-
-        {% block content %}
-
-        {% endblock %}
-
-    </div>
-</section>
+    </section>
+{% endblock %}
 <!-- Product Section Begin -->
 
 <!-- Product Section End -->

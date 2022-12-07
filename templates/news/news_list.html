@@ -1,48 +1,48 @@
 {% extends "base.html" %}
 {% load static %}
-<!-- Header End -->
-
-{% block content %}
-    <!-- Normal Breadcrumb Begin -->
-    <section class="normal-breadcrumb set-bg" data-setbg="img/logo-rectangle_news.png">
+{% load app_filters %}
+{% block breadcrumb %}
+    <section class="normal-breadcrumb set-bg" data-setbg="{% static 'img/normal-breadcrumb.jpg' %}">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="normal__breadcrumb__text">
-                        <h2>ЖАҢАЛЫҚТАР</h2>
-                        <p>Дофамин тобының соңғы жаңалықтары</p>
+                        <h2>Our Blog</h2>
+                        <p>Welcome to the official Anime blog.</p>
                     </div>
+
                 </div>
             </div>
         </div>
     </section>
-    <!-- Normal Breadcrumb End -->
-
-    <!-- Blog Section Begin -->
+{% endblock %}
+{% block content %}
     <section class="blog spad">
         <div class="container">
             <div class="row">
-                {% for news in object_list %}
+                {% with a='col-lg-6 col-md-6 col-sm-6' %}
                     <div class="col-lg-6">
                         <div class="row">
-                            <div class="col-lg-12">
-                                <div class="blog__item set-bg" data-setbg="{{ news.poster.url }}">
-                                    <div class="blog__item__text">
-                                        <h4><a href="{{ news.get_absolute_url }}">{{ news.title }}</a></h4>
-                                        <p><span class="icon_calendar"></span> {{ news.created_at }}</p>
+                            {% for news in object_list %}
+                                <div class="{% cycle 'col-lg-12' a a a a 'col-lg-12' %}">
+                                    <div class="blog__item set-bg {% cycle '' 'small__item' 'small__item' 'small__item' 'small__item' '' %}"
+                                         data-setbg="{{ news.poster.url }}">
+                                        <div class="blog__item__text">
+                                            <p><span class="icon_calendar"></span> {{ news.created_at }}</p>
+                                            <h4><a href="{{ news.get_absolute_url }}">{{ news.title }}</a></h4>
+                                        </div>
                                     </div>
-
                                 </div>
-
+                                {% if forloop.counter|divisibleby:3 %}
+                                    </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                    <div class="row">
+                                {% endif %}
+                            {% endfor %}
                             </div>
-                            <a href="{{ news.get_absolute_url }}">
-                                <div class="btn btn-success">
-                                    Толығымен оқу
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                {% endfor %}
+                            </div>
+                {% endwith %}
             </div>
         </div>
     </section>

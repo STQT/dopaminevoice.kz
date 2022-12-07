@@ -14,7 +14,7 @@ User = get_user_model()
 
 def main_page(request):
     qs = Movie.objects.prefetch_related("series").distinct()
-    banner = Movie.objects.filter(url="chainsawman").first()
+    banner = Movie.objects.filter(banner=True)
     ctx = {"anime": qs, "banner": banner}
     return render(request, 'index.html', ctx)
 

@@ -1,5 +1,6 @@
 {% extends "account/base.html" %}
-{% load i18n  account %} {% block head_title %}{% trans "Кіру" %}{% endblock %}
+{% load i18n static account %}
+{% block head_title %}{% trans "Кіру" %}{% endblock %}
 {% block common_scripts %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script type="text/javascript">
@@ -15,41 +16,97 @@
             $('#id_password').addClass('form-control');
         });
     </script>
-{% endblock %} {% block content %}
-    <h3 style="background-color: #7abaff; text-align: center">Кіру үшін төмендегі алеуметтік желінен біреун
-        тандаңіз</h3>
-    <section style="background: #ffffff">
-
-        <div class="container col-md-12">
-            <div class="well login-well">
-                <div class="socialaccount_ballot">
-                    <ul class="socialaccount_providers" style="list-style-type: none;">
-                        {% load socialaccount %}
-                        {% get_providers as socialaccount_providers %}
-                        {% for provider in socialaccount_providers %}
-                            {% if provider.id == "openid" %}
-                                {% for brand in provider.get_brands %}
-                                    <li>
-                                        <a title="{{ brand.name }}"
-                                           class="btn btn-block btn-social btn-md btn-{{ provider.id }} socialaccount_provider {{ brand.id }}"
-                                           href="{% provider_login_url provider.id openid=brand.openid_url process=" login " %}">
-                                            <i class="fa fa-{{ provider.id }}"></i>Log in with {{ brand.name }}
-                                        </a>
-                                    </li>
-                                {% endfor %} {% endif %}
-                            <li>
-                                <a title="{{ provider.name }}"
-                                   class="btn btn-block btn-social btn-md socialaccount_provider btn-{{ provider.id }}"
-                                   href="{% provider_login_url provider.id process=" login " %}">
-                                    <i class="fa fa-{{ provider.id }}"></i>Log in with {{ provider.name }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    <hr>
-
+{% endblock %}
+{% block breadcrumb %}
+    <section class="normal-breadcrumb set-bg" data-setbg="{% static 'img/normal-breadcrumb.jpg' %}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="normal__breadcrumb__text">
+                        <h2>Login</h2>
+                        <p>Welcome to the official Anime blog.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <section class="login spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="login__form">
+                        <h3>Login</h3>
+                        <form method="POST" action="{% url 'account_login' %}">
+                            {% csrf_token %}
+                            <div class="input__item">
+
+                                <input type="text" name="login" placeholder="Username" autocomplete="username"
+                                       maxlength="150" required=""
+                                       id="id_login">
+                                <span class="icon_profile"></span>
+                            </div>
+                            <div class="input__item">
+                                <input type="password" name="password" placeholder="Құпия сөз"
+                                       autocomplete="current-password" required=""
+                                       id="id_password">
+                                <span class="icon_lock"></span>
+                            </div>
+                            <div>
+                                <label for="id_remember">Сақтау:</label>
+                                <input type="checkbox" name="remember" id="id_remember">
+                            </div>
+                            {% if redirect_field_value %}
+                                <input type="hidden" name="{{ redirect_field_name }}"
+                                       value="{{ redirect_field_value }}"/>
+                            {% endif %}
+                            <button type="submit" class="site-btn">{% trans "Sign In" %}</button>
+                        </form>
+                        <a class="forget_pass"
+                           href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="login__register">
+                        <h3>Dont’t Have An Account?</h3>
+                        <a href="#" class="primary-btn">Register Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="login__social">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="login__social__links">
+                            <span>or</span>
+                            <ul>
+                                {% load socialaccount %}
+                                {% get_providers as socialaccount_providers %}
+                                {% for provider in socialaccount_providers %}
+                                    {% if provider.id == "openid" %}
+                                        {% for brand in provider.get_brands %}
+                                            <li>
+                                                <a title="{{ brand.name }}"
+                                                   class="btn btn-block btn-social btn-md btn-{{ provider.id }} socialaccount_provider {{ brand.id }}"
+                                                   href="{% provider_login_url provider.id openid=brand.openid_url process=" login " %}">
+                                                    <i class="fa fa-{{ provider.id }}"></i>Log in with {{ brand.name }}
+                                                </a>
+                                            </li>
+                                        {% endfor %} {% endif %}
+                                    <li>
+                                        <a title="{{ provider.name }}"
+                                           class="{{ provider.id }}"
+                                           href="{% provider_login_url provider.id process=" login " %}">
+                                            <i class="fa fa-{{ provider.id }}"></i>Sign in With {{ provider.name }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block content_header %}
 {% endblock %}

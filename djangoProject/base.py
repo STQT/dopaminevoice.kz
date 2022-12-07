@@ -43,6 +43,7 @@ THIRD_PARTY_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
     "rosetta",
+    "admin_async_upload",
 ]
 
 LOCAL_APPS = [

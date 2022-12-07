@@ -25,4 +25,17 @@ class GenreAdmin(admin.ModelAdmin):
 
 @admin.register(MovieComments)
 class MovieCommentsAdmin(admin.ModelAdmin):
-    pass
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        # if db_field.name == "cars":
+        kwargs["queryset"] = MovieComments.objects.filter(author=request.user)
+        return super().formfield_for_manytomany(db_field, request, **kwargs)
+
+    def formfield_for_choice_field(self, db_field, request, **kwargs):
+        # if db_field.name == "status":
+        kwargs['choices'] = (
+            ('accepted', 'Accepted'),
+            ('denied', 'Denied'),
+        )
+        if request.user.is_superuser:
+            kwargs['choices'] += (('ready', 'Ready for deployment'),)
+        return super().formfield_for_choice_field(db_field, request, **kwargs)

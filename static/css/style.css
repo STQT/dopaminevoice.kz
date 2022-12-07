@@ -1,10 +1,42 @@
+/******************************************************************
+  Theme Name: Anime
+  Description: Anime video tamplate
+  Author: Colorib
+  Author URI: https://colorib.com/
+  Version: 1.0
+  Created: Colorib
+******************************************************************/
+
+/*------------------------------------------------------------------
+[Table of contents]
+
+1.  Template default CSS
+	1.1	Variables
+	1.2	Mixins
+	1.3	Flexbox
+	1.4	Reset
+2.  Helper Css
+3.  Header Section
+4.  Hero Section
+5.  Banner Section
+6.  Product Section
+7.  Intagram Section
+8.  Latest Section
+9.  Contact
+10.  Footer Style
+-------------------------------------------------------------------*/
+
+/*----------------------------------------*/
+
+/* Template default CSS
+/*----------------------------------------*/
+
 html,
 body {
 	height: 100%;
 	font-family: "Mulish", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	background: #0b0c2a;
-	z-index: -200;
 }
 
 h1,
@@ -28,7 +60,7 @@ h2 {
 }
 
 h3 {
-	font-size: 25px;
+	font-size: 30px;
 }
 
 h4 {
@@ -37,7 +69,6 @@ h4 {
 
 h5 {
 	font-size: 18px;
-	text-align: center;
 }
 
 h6 {
@@ -47,7 +78,7 @@ h6 {
 p {
 	font-size: 15px;
 	font-family: "Mulish", sans-serif;
-	color: white;
+	color: #fff;
 	font-weight: 400;
 	line-height: 25px;
 	margin: 0 0 15px 0;
@@ -56,9 +87,7 @@ p {
 img {
 	max-width: 100%;
 }
-.featured-title{
-	width: 100%;
-}
+
 input:focus,
 select:focus,
 button:focus,
@@ -75,7 +104,7 @@ a:focus {
 
 ul,
 ol {
-	padding: 0;
+	padding: 6px;
 	margin: 0;
 }
 
@@ -95,7 +124,7 @@ ol {
 	text-transform: uppercase;
 	padding-left: 20px;
 	position: relative;
-	font-family: "Mulish", sans-serif;
+	font-family: "Oswald", sans-serif;
 }
 
 .section-title h4:after,
@@ -111,12 +140,12 @@ ol {
 
 .set-bg {
 	background-repeat: no-repeat;
-	background-position: top center;
 	background-size: cover;
-	
+	background-position: top center;
 }
 
 .spad {
+	padding-top: 100px;
 	padding-bottom: 100px;
 }
 
@@ -298,11 +327,11 @@ ol {
 -----------------------*/
 
 .header {
-	background: #0b0c2a;
+	background: #070720;
 }
 
 .header__logo {
-	padding: 9px 0 50px;
+	padding: 20px 0 17px;
 }
 
 .header__logo a {
@@ -317,7 +346,7 @@ ol {
 	list-style: none;
 	display: inline-block;
 	position: relative;
-	margin-right: 0;
+	margin-right: 16px;
 }
 
 .header__menu ul li.active a {
@@ -347,7 +376,7 @@ ol {
 	position: absolute;
 	left: 0;
 	top: 82px;
-	width: 200px;
+	width: 150px;
 	background: #ffffff;
 	text-align: left;
 	padding: 5px 0;
@@ -390,57 +419,202 @@ ol {
 
 .header__right {
 	text-align: right;
-	padding-top: 10px;
+	padding: 20px 0 15px;
 }
 
 .header__right a {
 	display: inline-block;
-	font-size: 15px;
+	font-size: 18px;
 	color: #ffffff;
+	margin-right: 30px;
 }
 
+.header__right a:last-child {
+	margin-right: 0;
+}
 
 .slicknav_menu {
 	display: none;
 }
 
+/*---------------------
+  Hero
+-----------------------*/
 
-.featured-content{
-	background-color: white;
-	border-radius: 20px;
-    padding-bottom: 60px;
+.hero {
+	padding-top: 50px;
 }
 
-.featured-title{
-   	width: 500px;
-	background-color: rgba(1, 1, 1, 0.4);
+.hero__items {
+	padding: 250px 0 42px 50px;
+	border-radius: 5px;
 }
 
-.featured-description {
-	color: white;
-	font-family: "Mulish", sans-serif;
-    font-size: 30px;
-    padding-left: 20px;
-}
-.featured-description p{
-	color: white;
-	font-family: "Mulish", sans-serif;
-    font-size: 30px;
-    padding-left: 20px;
+.hero__text {
+	position: relative;
+	z-index: 9;
 }
 
+.hero__text .label {
+	font-size: 13px;
+	color: #e53637;
+	background: #ffffff;
+	padding: 5px 14px 3px;
+	display: inline-block;
+	position: relative;
+	top: -100px;
+	opacity: 0;
+	-webkit-transition: all, 0.2s;
+	-o-transition: all, 0.2s;
+	transition: all, 0.2s;
+}
 
-.featured-button{
-    background-color: white;
-    color: black;
-    padding: 10px 20px;
-    border-radius: 20px;
-    border: none;
-    outline: none;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    
+.hero__text h2 {
+	color: #ffffff;
+	font-size: 42px;
+	font-family: "Oswald", sans-serif;
+	font-weight: 700;
+	line-height: 52px;
+	margin-top: 35px;
+	margin-bottom: 8px;
+	position: relative;
+	top: -100px;
+	opacity: 0;
+	-webkit-transition: all, 0.4s;
+	-o-transition: all, 0.4s;
+	transition: all, 0.4s;
+}
+
+.hero__text p {
+	color: #ffffff;
+	font-size: 16px;
+	margin-bottom: 40px;
+	position: relative;
+	top: -100px;
+	opacity: 0;
+	-webkit-transition: all, 0.6s;
+	-o-transition: all, 0.6s;
+	transition: all, 0.6s;
+}
+
+.hero__text a {
+	position: relative;
+	top: -100px;
+	opacity: 0;
+	-webkit-transition: all, 0.8s;
+	-o-transition: all, 0.8s;
+	transition: all, 0.8s;
+}
+
+.hero__text a span {
+	font-size: 13px;
+	color: #ffffff;
+	background: #e53637;
+	display: inline-block;
+	font-weight: 700;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	padding: 14px 20px;
+	border-radius: 4px 0 0 4px;
+	margin-right: 1px;
+}
+
+.hero__text a i {
+	font-size: 20px;
+	display: inline-block;
+	background: #e53637;
+	padding: 11px 5px 16px 8px;
+	color: #ffffff;
+	border-radius: 0 4px 4px 0;
+}
+
+.hero__slider.owl-carousel .owl-item.active .hero__text .label {
+	top: 0;
+	opacity: 1;
+}
+
+.hero__slider.owl-carousel .owl-item.active .hero__text h2 {
+	top: 0;
+	opacity: 1;
+}
+
+.hero__slider.owl-carousel .owl-item.active .hero__text p {
+	top: 0;
+	opacity: 1;
+}
+
+.hero__slider.owl-carousel .owl-item.active .hero__text a {
+	top: 0;
+	opacity: 1;
+}
+
+.hero__slider.owl-carousel .owl-dots {
+	position: absolute;
+	left: 0;
+	bottom: 10px;
+	width: 100%;
+	text-align: center;
+}
+
+.hero__slider.owl-carousel .owl-dots button {
+	height: 8px;
+	width: 8px;
+	background: #b7b7b7;
+	border-radius: 50%;
+	margin-right: 10px;
+}
+
+.hero__slider.owl-carousel .owl-dots button.active {
+	background: #ffffff;
+}
+
+.hero__slider.owl-carousel .owl-dots button:last-child {
+	margin-right: 0;
+}
+
+.hero__slider.owl-carousel .owl-nav button {
+	font-size: 36px;
+	height: 66px;
+	width: 66px;
+	background: #0b0c2a;
+	line-height: 66px;
+	text-align: center;
+	color: #ffffff;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
+	position: relative;
+	z-index: 1;
+	position: absolute;
+	left: -33px;
+	top: 50%;
+	margin-top: -47px;
+}
+
+.hero__slider.owl-carousel .owl-nav button.owl-next {
+	left: auto;
+	right: -33px;
+}
+
+.hero__slider.owl-carousel .owl-nav button:after {
+	position: absolute;
+	top: 6px;
+	left: 0;
+	right: 0;
+	height: 54px;
+	width: 54px;
+	background: rgba(255, 255, 255, 0.1);
+	content: "";
+	z-index: -1;
+	margin: 0 auto;
+}
+
+.hero__slider.owl-carousel .owl-nav button span {
+	-webkit-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+	display: block;
+	z-index: 1;
 }
 
 /*---------------------
@@ -448,13 +622,11 @@ ol {
 -----------------------*/
 
 .product {
-	
 	padding-bottom: 60px;
-	padding-top: 0;
+	padding-top: 80px;
 }
 
 .product-page {
-	
 	padding-top: 60px;
 }
 
@@ -549,7 +721,7 @@ ol {
 .product__sidebar .section-title h5 {
 	color: #ffffff;
 	font-weight: 600;
-	font-family: "Mulish", sans-serif;
+	font-family: "Oswald", sans-serif;
 	line-height: 21px;
 	text-transform: uppercase;
 	padding-left: 20px;
@@ -774,6 +946,7 @@ ol {
 -----------------------*/
 
 .anime-details {
+	padding-top: 60px;
 }
 
 .anime__details__content {
@@ -1005,7 +1178,95 @@ ol {
 	border-radius: 2px;
 }
 
+/*---------------------
+  Anime Watching
+-----------------------*/
+
+.anime__video__player {
+	margin-bottom: 70px;
+}
+
+.anime__video__player .plyr--video {
+	border-radius: 5px;
+	background: transparent;
+}
+
+.anime__video__player .plyr audio,
+.anime__video__player .plyr iframe,
+.anime__video__player .plyr video {
+	width: 102%;
+}
+
+.anime__video__player .plyr--full-ui.plyr--video .plyr__control--overlaid {
+	display: block;
+}
+
+.anime__video__player .plyr--video .plyr__control.plyr__tab-focus,
+.anime__video__player .plyr--video .plyr__control:hover,
+.anime__video__player .plyr--video .plyr__control[aria-expanded=true] {
+	background: transparent;
+}
+
+.anime__video__player .plyr--video .plyr__controls {
+	background: transparent;
+}
+
+.anime__video__player .plyr--video .plyr__progress__buffer {
+	color: transparent;
+}
+
+.anime__video__player .plyr--full-ui input[type=range] {
+	color: #ffffff;
+}
+
+.anime__video__player .plyr__controls .plyr__controls__item.plyr__progress__container {
+	position: absolute;
+	left: 26px;
+	bottom: 45px;
+	width: calc(100% - 60px);
+}
+
+.anime__video__player .plyr__menu {
+	margin-right: 70px;
+}
+
+.anime__video__player .plyr__controls .plyr__controls__item:first-child {
+	position: absolute;
+	left: 32px;
+	bottom: 8px;
+}
+
+.anime__video__player .plyr__controls .plyr__controls__item:last-child {
+	position: absolute;
+	right: 32px;
+	bottom: 8px;
+}
+
+.anime__video__player .plyr__volume {
+	position: absolute;
+	width: auto;
+	left: 76px;
+	bottom: 8px;
+}
+
+.anime__video__player .plyr__controls .plyr__controls__item.plyr__time {
+	position: absolute;
+	left: 106px;
+	bottom: 12px;
+}
+
+.anime__video__player .plyr__control--overlaid {
+	background: transparent;
+	background: var(--plyr-video-control-background-hover, var(--plyr-color-main, var(--plyr-color-main, transparent)));
+}
+
+.anime__video__player .plyr__control--overlaid svg {
+	height: 60px;
+	width: 50px;
+}
+
 .anime__details__episodes {
+	margin-bottom: 35px;
 }
 
 .anime__details__episodes a {
@@ -1082,7 +1343,7 @@ ol {
 .normal__breadcrumb__text h2 {
 	color: #ffffff;
 	font-size: 48px;
-	font-family: "Mulish", sans-serif;
+	font-family: "Oswald", sans-serif;
 	font-weight: 700;
 	margin-bottom: 22px;
 }
@@ -1156,11 +1417,12 @@ ol {
 -----------------------*/
 
 .blog-details {
+	padding-top: 70px;
 }
 
 .blog__details__title {
 	text-align: center;
-	margin-bottom: 30px;
+	margin-bottom: 70px;
 }
 
 .blog__details__title h6 {
@@ -1182,13 +1444,14 @@ ol {
 	font-size: 48px;
 	font-weight: 700;
 	line-height: 60px;
-	margin-bottom: 0px;
+	margin-bottom: 38px;
 }
 
 .blog__details__title .blog__details__social a {
 	display: inline-block;
 	font-size: 15px;
 	color: #ffffff;
+	padding: 16px 35px 14px 20px;
 	border-radius: 2px;
 	margin-right: 6px;
 }
@@ -1197,20 +1460,20 @@ ol {
 	margin-right: 0;
 }
 
-.blog__details__title .blog__details__social a.tiktok {
-	background: #000000;
+.blog__details__title .blog__details__social a.facebook {
+	background: #3b5998;
 }
 
-.blog__details__title .blog__details__social a.youtube {
+.blog__details__title .blog__details__social a.pinterest {
 	background: #ca2027;
 }
 
-.blog__details__title .blog__details__social a.telegram {
+.blog__details__title .blog__details__social a.linkedin {
 	background: #0372b1;
 }
 
-.blog__details__title .blog__details__social a.instagram {
-	background: #c739f2;
+.blog__details__title .blog__details__social a.twitter {
+	background: #39a1f2;
 }
 
 .blog__details__title .blog__details__social a i {
@@ -1222,8 +1485,7 @@ ol {
 }
 
 .blog__details__pic img {
-	max-width: 800px;
-	margin-left: 170px;
+	min-width: 100%;
 }
 
 .blog__details__text {
@@ -1247,9 +1509,7 @@ ol {
 }
 
 .blog__details__item__text img {
-	width: 250px;
-	height: 350px;
-	object-fit: cover;
+	min-width: 100%;
 	margin-bottom: 26px;
 }
 
@@ -1618,6 +1878,9 @@ ol {
 .login__social__links ul li a.twitter {
 	background: #1da1f2;
 }
+.login__social__links ul li a.vk {
+	background: #006ff1;
+}
 
 .login__social__links ul li a i {
 	font-size: 20px;
@@ -1673,7 +1936,8 @@ ol {
 
 .footer {
 	background: #070720;
-	padding-top: 20px;
+	padding-top: 60px;
+	padding-bottom: 40px;
 	position: relative;
 }
 
@@ -1748,22 +2012,29 @@ ol {
 	}
 }
 
+/* Medium Device = 1200px */
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+	.hero {
+		overflow: hidden;
+	}
+	.login__form {
+		position: relative;
+		padding-left: 32px;
+	}
+	.login__social__links ul li a {
+		width: 380px;
+	}
+	.blog__item__text {
+		padding: 0 50px;
+	}
+}
+
 /* Tablet Device = 768px */
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
 	.hero {
 		overflow: hidden;
-	}
-	img {
-		width: 50%;
-	}
-	.featured-title{
-	width: 100%;
-    }
-	.set-bg {
-		background-repeat: no-repeat;
-    	background-position: top center;
-    	background-size: contain;
 	}
 	.header {
 		position: relative;
@@ -1772,8 +2043,9 @@ ol {
 		position: relative;
 	}
 	.header__right {
-		position: relative;
-		top: -60px;
+		position: absolute;
+		right: 120px;
+		top: -42px;
 		padding: 0;
 	}
 	.header__menu {
@@ -1804,8 +2076,8 @@ ol {
 		font-weight: 600;
 	}
 	.slicknav_btn {
-		border-radius: 10px;
-		background-color: #e53637;
+		border-radius: 0;
+		background-color: #222;
 		position: absolute;
 		right: 0;
 		top: 9px;
@@ -1827,7 +2099,6 @@ ol {
 		padding-top: 50px;
 	}
 	.footer__logo {
-		margin-top: 20px;
 		text-align: center;
 		margin-bottom: 20px;
 	}
@@ -1870,29 +2141,6 @@ ol {
 	.hero {
 		overflow: hidden;
 	}
-	
-.product__item__pic .ep {
-	font-size: 13px;
-	color: #ffffff;
-	background: #e53637;
-	display: inline-block;
-	padding: 2px 12px;
-	border-radius: 4px;
-	position: absolute;
-	left: 28%;
-	top: 10px;
-}
-
-.product__item__text {
-	padding-top: 20px;
-	padding-left: 80px;
-}
-
-.product__item__text h5 a {
-	color: #ffffff;
-	font-weight: 700;
-	line-height: 26px;
-}
 	.header {
 		position: relative;
 	}
@@ -1900,8 +2148,9 @@ ol {
 		position: relative;
 	}
 	.header__right {
-		position: relative;
-		top: -60px;
+		position: absolute;
+		right: 120px;
+		top: -42px;
 		padding: 0;
 	}
 	.header__menu {
@@ -1932,11 +2181,11 @@ ol {
 		font-weight: 600;
 	}
 	.slicknav_btn {
-		border-radius: 10px;
-		background-color: #e53637;
+		border-radius: 0;
+		background-color: #222;
 		position: absolute;
 		right: 0;
-		top: 20px;
+		top: 9px;
 	}
 	.slicknav_nav .slicknav_arrow {
 		color: #111111;
@@ -1954,24 +2203,9 @@ ol {
 	.product__sidebar {
 		padding-top: 50px;
 	}
-	img {
-		width: 50%;
-	}
-	.featured-title{
-	width: 100%;
-}
-	.set-bg {
-		background-repeat: no-repeat;
-    	background-position: top center;
-    	background-size: contain;
-	}
-	.title{
-		width: 80%;
-		margin: 0;
-	}
 	.footer__logo {
-		margin-top: 20px;
 		text-align: center;
+		margin-bottom: 20px;
 	}
 	.footer__nav {
 		margin-bottom: 15px;
@@ -2040,12 +2274,6 @@ ol {
 	.search-model-form input {
 		width: 100%;
 	}
-	.product__sidebar__view__item h5 {
-	position: absolute;
-	bottom: 25px;
-	width: 100%;
-	padding: 0 30px 0 20px;
-}
 }
 
 /* Small Device = 320px */
@@ -2063,11 +2291,6 @@ ol {
 	.footer__nav ul li {
 		margin-right: 10px;
 	}
-	.set-bg {
-		background-repeat: no-repeat;
-    	background-position: top center;
-    	background-size: contain;
-	}
 	.anime__details__btn .follow-btn {
 		padding: 14px 26px;
 		margin-right: 11px;
@@ -2075,6 +2298,15 @@ ol {
 	}
 	.anime__details__widget ul li span {
 		width: 85px;
+	}
+	.anime__video__player .plyr__volume {
+		left: 65px;
+	}
+	.anime__video__player .plyr__controls .plyr__controls__item.plyr__time {
+		left: 95px;
+	}
+	.anime__video__player .plyr__menu {
+		margin-right: 60px;
 	}
 	.blog__details__title h2 {
 		font-size: 30px;
@@ -2101,25 +2333,13 @@ ol {
 		bottom: 0;
 		margin-top: 25px;
 	}
-	img {
-	width: 50%;
+	.header__right a {
+		margin-right: 10px;
 	}
-	.featured-title{
-	width: 100%;
-}
 	.anime__review__item__text h6 span {
 		font-size: 12px;
 	}
 	.anime__review__item__text {
 		padding: 18px 20px 20px;
-	}
-	.header__right {
-		position: relative;
-		top: -60px;
-		padding: 0;
-		padding-top: 10px;
-	}
-	.product__sidebar__view__item h5 {
-		
 	}
 }

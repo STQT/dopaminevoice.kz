@@ -12,6 +12,7 @@ urlpatterns = [
     path("news/", include("news.urls", namespace="news"), name="news"),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('accounts/', include('allauth.urls')),
+    path('admin_async_upload/', include('admin_async_upload.urls')),
     path("", include("movies.urls", namespace="movies")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

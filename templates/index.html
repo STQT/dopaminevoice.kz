@@ -2,71 +2,76 @@
 {% load static %}
 
 {% block reklama %}
-    <div class="video-wrapper">
-        <video autoplay loop muted plays-inline class="back-video">
-            <source src="{% static 'video/chainsawman.mp4' %}" type="video/mp4">
-        </video>
-        <div class="banner_description">
-            <div>
-                <img class="featured-title" src="{% static 'img/chainsawman_logo_kaz.png' %}" alt="">
-            </div>
-            <!-- <p class="featured-description">ШЫНЖЫРЛЫ АРА АДАМ 1 МАУСЫМ! </p>-->
-            <a href="{{ banner.get_absolute_url }}" style="">
-                <button class="featured-button">ҚАРАУ</button>
-            </a>
-        </div>
-    </div>
-{% endblock %}
-{% block content %}
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="trending__product">
-                <div class="row">
-                    <div class="col-lg-8 col-md-8 col-sm-8">
-                        <div class="section-title">
-                            <h4>ЖАҢА ДЫБЫСТАМАЛАР</h4>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4">
-                        <div class="btn__all">
-                            <a href="{% url 'movies:movie_list' %}" class="primary-btn hover-red">БАРЛЫҒЫ <span
-                                    class="arrow_right"></span></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <!--*************-->
-                    {% for movie in anime %}
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <a href="{{ movie.get_absolute_url }}">
-                                    <div class="product__item__pic set-bg"
-                                         data-setbg="{{ movie.img.url }}">
-                                        {% if not movie.full_length %}
-                                        <div class="ep">{{ movie.series.last.number }} / {{ movie.max_series }}</div>
-                                        {% endif %}
-                                    </div>
-                                    <div class="product__item__text">
-                                        <!-- <ul>
-                                            <li>Active</li>
-                                            <li>Movie</li>
-                                        </ul> !-->
-                                        <h5 class="title">{{ movie.title }}</h5>
-                                    </div>
-                                </a>
+    <section class="hero">
+        <div class="container">
+            <div class="hero__slider owl-carousel">
+                {% for movie in banner %}
+                    <div class="hero__items set-bg" data-setbg="{{ movie.landscape_photo.url }}">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="hero__text">
+                                    <div class="label">{{ movie.genre.all.first.title }}</div>
+                                    <h2>{{ movie.title }}</h2>
+                                    <p>{{ movie.description|truncatechars:40 }}</p>
+                                    <a href="{{ movie.get_absolute_url }}"><span>Көру</span> <i class="fa fa-angle-right"></i></a>
+                                </div>
                             </div>
                         </div>
-                    {% endfor %}
-
-
-                </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
+    </section>
+{% endblock %}
+{% block content %}
+    <section class="product spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="trending__product">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <div class="section-title">
+                                    <h4>ЖАҢА ДЫБЫСТАМАЛАР</h4>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="btn__all">
+                                    <a href="{% url 'movies:movie_list' %}" class="primary-btn hover-red">БАРЛЫҒЫ <span
+                                            class="arrow_right"></span></a>
+                                </div>
+                            </div>
+                        </div>
 
-
-        {% include "includes/sidebar.html" %}
-
-
-    </div>
+                        <div class="row">
+                            <!--*************-->
+                            {% for movie in anime %}
+                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                    <div class="product__item">
+                                        <a href="{{ movie.get_absolute_url }}">
+                                            <div class="product__item__pic set-bg"
+                                                 data-setbg="{{ movie.img.url }}">
+                                                {% if not movie.full_length %}
+                                                    <div class="ep">{{ movie.series.last.number }}
+                                                        / {{ movie.max_series }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="product__item__text">
+                                                <!-- <ul>
+                                                    <li>Active</li>
+                                                    <li>Movie</li>
+                                                </ul> !-->
+                                                <h5 class="title">{{ movie.title }}</h5>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% include "includes/sidebar.html" %}
+            </div>
+        </div>
+    </section>
 {% endblock %}

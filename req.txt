@@ -9,6 +9,7 @@ defusedxml==0.7.1
 dj-database-url==1.0.0
 Django==4.1.3
 django-active-link==0.1.8
+django-admin-async-upload  @ https://github.com/STQT/django-admin-async-upload/archive/refs/heads/master.zip
 django-allauth==0.51.0
 django-ckeditor==6.5.1
 django-debug-toolbar==3.7.0
